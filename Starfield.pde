@@ -14,24 +14,28 @@ void setup()
 void draw()
 {
 	//your code here
+	fill(0,0,0);
+	rect(0, 0, width, height);
 	for(int i = 0; i < bob.length; i++)
 	{
 	bob[i].move();
 	bob[i].draw();
 	}
+	bob = (Particle[])(append(bob, new Particle()));
+	if(Math.random() < 0.03)
+		bob = (Particle[])(append(bob, new OddballParticle()));
 }
 class Particle
 {
 	int myX, myY, hue;
-	float angle, accel, mov;
+	float angle, mov;
 	Particle()
 	{
 		myX = width / 2;
 		myY = height / 2;
 		hue = (int)(Math.random() * 255);
 		angle = (float)(Math.random() * 2 * PI);
-		accel = (float)(Math.random() * 0.2) + 1;
-		mov = 1.03;
+		mov = (float)(Math.random() ) + 1;
 	}
 
 	void move()
@@ -39,22 +43,41 @@ class Particle
 		myX += (int)(cos(angle) * mov );
 		myY += (int)(sin(angle) * mov );
 		mov *= 1.1;
-		System.out.println(mov);
 
 	}
 
 	void draw()
 	{
 		int bright = (int)(dist(myX, myY, width / 2,  height / 2) );
-		System.out.println(bright);
 		fill(hue, 20, bright);
 		rect(myX, myY, 5, 5);
 	}
 }
 
-class OddballParticle //inherits from Particle
+class OddballParticle extends Particle
 {
-	//your code here
+	PImage img;
+	float s;
+	OddballParticle() 
+	{
+		myX = width / 2;
+		myY = height / 2;
+		angle = (float)(Math.random() * 2 * PI);
+		mov = (float)(Math.random() ) + 1;
+		//img = 
+		s = 10;
+	}
+
+	void draw()
+	{
+		//resize 100 * pow(0.5, 300 - dist(myX, myY, width / 2,  height / 2))
+		fill(50, 20, 70);
+		s *= 1.07;
+		int bright = (int)(dist(myX, myY, width / 2,  height / 2) );
+		fill(hue, 20, bright);
+		//rect(myX, myY, 10 * pow(0.5, 300 - dist(myX, myY, width / 2,  height / 2)), 10 * pow(0.5, 300 - dist(myX, myY, width / 2,  height / 2)));
+		rect(myX, myY, s, s);
+	}
 }
 
 
