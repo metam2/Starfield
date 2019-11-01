@@ -16,6 +16,7 @@ void draw()
 	//your code here
 	fill(0,0,0);
 	rect(0, 0, width, height);
+	bob = rmvParticle(bob);
 	for(int i = 0; i < bob.length; i++)
 	{
 	bob[i].move();
@@ -57,6 +58,7 @@ class Particle
 class OddballParticle extends Particle
 {
 	PImage img;
+	String imgName;
 	float s;
 	OddballParticle() 
 	{
@@ -66,18 +68,40 @@ class OddballParticle extends Particle
 		mov = (float)(Math.random() ) + 1;
 		//img = 
 		s = 10;
+		float chance = (float)(Math.random());
+		if(chance < 0.25)
+			imgName = "ship1.png";
+		else if(chance < 0.5)
+			imgName = "ship2.png";
+		else if(chance < 0.75)
+			imgName = "asteroid.png";
+		else 
+			imgName = "planet.png";
+
 	}
 
 	void draw()
 	{
-		//resize 100 * pow(0.5, 300 - dist(myX, myY, width / 2,  height / 2))
-		fill(50, 20, 70);
 		s *= 1.07;
 		int bright = (int)(dist(myX, myY, width / 2,  height / 2) );
 		fill(hue, 20, bright);
 		//rect(myX, myY, 10 * pow(0.5, 300 - dist(myX, myY, width / 2,  height / 2)), 10 * pow(0.5, 300 - dist(myX, myY, width / 2,  height / 2)));
-		rect(myX, myY, s, s);
+		img = loadImage(imgName);
+		img.resize((int)s,(int)s);
+		image(img, myX, myY);
 	}
 }
 
 
+Particle[] rmvParticle(Particle[] bob)
+{
+	Particle[] arr = {};
+	for(int i = 0; i < bob.length; i++)
+	{
+		if(!(bob[i].myX < -50 || bob[i].myX > width || bob[i].myY < -50 || bob[i].myY > height))
+		{
+			arr = (Particle[])(append(arr, bob[i]));
+		}
+	}
+	return arr;
+}
