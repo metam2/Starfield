@@ -5,9 +5,9 @@ void setup()
 	size(600, 600);
 	colorMode(HSB);
 	background(0, 0, 0);
-	bob = new Particle[30];
+	bob = new Particle[0];
 	for(int i = 0; i < bob.length; i++)
-		bob[i] = new Particle();
+		{}//bob[i] = new Particle();
 	frameRate(30);
 }
 
@@ -22,9 +22,10 @@ void draw()
 	bob[i].move();
 	bob[i].draw();
 	}
-	bob = (Particle[])(append(bob, new Particle()));
-	if(Math.random() < 0.03)
+	//bob = (Particle[])(append(bob, new Particle()));
+	if(Math.random() < 1.03){
 		bob = (Particle[])(append(bob, new OddballParticle()));
+	}
 }
 class Particle
 {
@@ -57,8 +58,6 @@ class Particle
 
 class OddballParticle extends Particle
 {
-	PImage img;
-	String imgName;
 	float s;
 	OddballParticle() 
 	{
@@ -67,23 +66,21 @@ class OddballParticle extends Particle
 		angle = (float)(Math.random() * 2 * PI);
 		mov = (float)(Math.random() ) + 1;
 		s = 10;
-		float chance = (float)(Math.random());
-		if(chance < 0.25)
-			imgName = "ship1.png";
-		else if(chance < 0.5)
-			imgName = "ship2.png";
-		else if(chance < 0.75)
-			imgName = "asteroid.png";
-		else 
-			imgName = "planet.png";
 
 	}
 
 	void draw()
 	{
-		s *= 1.07;img = loadImage(imgName);
-		img.resize((int)s,(int)s);
-		image(img, myX, myY);
+		s *= 1.07;
+		int bright = (int)(dist(myX, myY, width / 2,  height / 2) / 2 );
+		if (bright > 180)
+			bright = 180;
+		fill(0, 30, bright);
+
+ellipseMode(CORNER);
+		ellipse(myX, myY, s, s);
+		fill(0, 0, bright /02);
+		ellipse(myX, myY + 30 , s,s);
 	}
 }
 
