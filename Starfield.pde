@@ -50,7 +50,7 @@ class Particle
 	void draw()
 	{
 		int bright = (int)(dist(myX, myY, width / 2,  height / 2) );
-		fill(hue, 20, bright);
+		fill(hue, 90, bright);
 		rect(myX, myY, 5, 5);
 	}
 }
@@ -66,7 +66,6 @@ class OddballParticle extends Particle
 		myY = height / 2;
 		angle = (float)(Math.random() * 2 * PI);
 		mov = (float)(Math.random() ) + 1;
-		//img = 
 		s = 10;
 		float chance = (float)(Math.random());
 		if(chance < 0.25)
@@ -82,11 +81,7 @@ class OddballParticle extends Particle
 
 	void draw()
 	{
-		s *= 1.07;
-		int bright = (int)(dist(myX, myY, width / 2,  height / 2) );
-		fill(hue, 20, bright);
-		//rect(myX, myY, 10 * pow(0.5, 300 - dist(myX, myY, width / 2,  height / 2)), 10 * pow(0.5, 300 - dist(myX, myY, width / 2,  height / 2)));
-		img = loadImage(imgName);
+		s *= 1.07;img = loadImage(imgName);
 		img.resize((int)s,(int)s);
 		image(img, myX, myY);
 	}
