@@ -6,8 +6,9 @@ void setup()
 	colorMode(HSB);
 	background(0, 0, 0);
 	bob = new Particle[30];
-	for(int i = 0; i < bob.length; i++)
+	for(int i = 0; i < bob.length - 1; i++)
 		bob[i] = new Particle();
+	bob[29] = new OddballParticle();
 	frameRate(30);
 }
 
