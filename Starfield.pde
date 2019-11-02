@@ -5,9 +5,9 @@ void setup()
 	size(600, 600);
 	colorMode(HSB);
 	background(0, 0, 0);
-	bob = new Particle[0];
+	bob = new Particle[30];
 	for(int i = 0; i < bob.length; i++)
-		{}//bob[i] = new Particle();
+		bob[i] = new Particle();
 	frameRate(30);
 }
 
@@ -22,8 +22,8 @@ void draw()
 	bob[i].move();
 	bob[i].draw();
 	}
-	//bob = (Particle[])(append(bob, new Particle()));
-	if(Math.random() < 1.03){
+	bob = (Particle[])(append(bob, new Particle()));
+	if(Math.random() < 0.03){
 		bob = (Particle[])(append(bob, new OddballParticle()));
 	}
 }
@@ -51,36 +51,32 @@ class Particle
 	void draw()
 	{
 		int bright = (int)(dist(myX, myY, width / 2,  height / 2) );
-		fill(hue, 90, bright);
+		fill(hue, 50, bright);
 		rect(myX, myY, 5, 5);
 	}
 }
 
 class OddballParticle extends Particle
 {
-	float s;
 	OddballParticle() 
 	{
 		myX = width / 2;
 		myY = height / 2;
 		angle = (float)(Math.random() * 2 * PI);
-		mov = (float)(Math.random() ) + 1;
-		s = 10;
+		mov = 10;
 
 	}
 
 	void draw()
 	{
-		s *= 1.07;
-		int bright = (int)(dist(myX, myY, width / 2,  height / 2) / 2 );
+		int bright = (int)(dist(myX, myY, width / 2,  height / 2)  );
 		if (bright > 180)
 			bright = 180;
-		fill(0, 30, bright);
 
-ellipseMode(CORNER);
-		ellipse(myX, myY, s, s);
-		fill(0, 0, bright /02);
-		ellipse(myX, myY + 30 , s,s);
+		fill(150, 30, bright);
+		ellipse(myX, myY, mov, mov );
+		fill(0, 0, bright / 2);
+		ellipse(myX, myY + mov / 2, mov * 2, mov );
 	}
 }
 
